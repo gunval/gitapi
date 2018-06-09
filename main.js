@@ -1,15 +1,22 @@
+//const axios = require("axios");
+'use strict';
 
-
-var vue = new Vue ({
+let vm = new Vue ({
     el: "#github-api",
     data: {
-        information: 'no information yet!',
+        information: 'no information yet!'
     },
     methods: 
     {
         getIssues: function(){
-            var str = this.text1;
-            this.message = 'You typed: <span style="color:white;background:red">' + str + '</span>.';
+            var url = "http://api.github.com/repos/gunval/test/issues";
+            axios.get(url)
+            .then(function(res) {
+                vm.information = JSON.stringify(res);
+            })
+            .catch(function(err){
+                console.log("error!!", err);
+            });
         }
     }
 });
