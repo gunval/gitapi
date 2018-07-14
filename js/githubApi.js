@@ -28,7 +28,7 @@ function githubApi() {
     this.getIssue = async () => {
         const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues?filter=all&state=all&sort=created&direction=asc";
 
-        const data = await getValues(url, options);
+        const data = await getValues(url, options).catch((err) => {console.log(err)});
         //console.log(JSON.stringify(data));
         return data;
     };
@@ -42,18 +42,12 @@ function githubApi() {
     };
 
     this.getColumnList = async (project_id) => {
-        const url =  "https://api.github.com/projects/" + project_id + "/columnss?access_token=" + access_token;
+        const url =  "https://api.github.com/projects/" + project_id + "/columns?access_token=" + access_token;
         
-        const data = await getValues(url, options);
+        const data = await getValues(url, options).catch((err) => {console.log(err)});
         //console.log(JSON.stringify(data));
         return data;
     };
 }
 
 module.exports = githubApi;
-
-var dd=new githubApi();
-
-var d = dd.getProjects();
-
-console.log(d);
