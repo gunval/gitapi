@@ -1,6 +1,6 @@
 const axios = require("axios");
 const JSON = require("circular-json");
-const setting = require("setting.json");
+const setting = require("./setting.json");
 
 function githubApi() {
     const organization = setting.organization;
@@ -15,7 +15,7 @@ function githubApi() {
         "headers" : headers
     };
 
-    const getValues = async (url, option) => {
+    const getValues =  (url, option) => {
         return new Promise((resolve, reject) => {
             axios.get(url, options).then((response) => {
                 resolve(response.data);
@@ -25,30 +25,35 @@ function githubApi() {
         });
     };
 
-    this.getIssue = () => {
+    this.getIssue = async () => {
         const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues?filter=all&state=all&sort=created&direction=asc";
 
         const data = await getValues(url, options);
-        console.log(JSON.stringify(data));
+        //console.log(JSON.stringify(data));
+        return data;
     };
 
     this.getProjects = async () => {
         const url = "https://api.github.com/repos/" + organization + "/" + repository + "/projects?access_token=" + access_token;
 
-        const data = await getValues(url, options);
-        console.log(JSON.stringify(data));
+        const data = await getValues(url, options).catch((err) => {console.log(err)});
+        //console.log(JSON.stringify(data));
+        return data;
     };
 
-    this.getColumnList = (project_id) => {
+    this.getColumnList = async (project_id) => {
         const url =  "https://api.github.com/projects/" + project_id + "/columnss?access_token=" + access_token;
         
         const data = await getValues(url, options);
-        console.log(JSON.stringify(data));
+        //console.log(JSON.stringify(data));
+        return data;
     };
 }
 
 module.exports = githubApi;
 
-var tt = new githubApi();
+var dd=new githubApi();
 
-tt.getProjects();
+var d = dd.getProjects();
+
+console.log(d);

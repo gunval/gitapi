@@ -11,5 +11,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "circular-json": "^0.5.5"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }
