@@ -27,19 +27,16 @@ function githubApi() {
 
     this.getIssue = async () => {
         const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues?filter=all&state=all&sort=created&direction=asc";
-
         return await getValues(url, options).catch((err) => {console.log(err)});
     };
 
     this.getProjects = async () => {
         const url = "https://api.github.com/repos/" + organization + "/" + repository + "/projects?access_token=" + access_token;
-
         return await getValues(url, options).catch((err) => {console.log(err)});
     };
 
     this.getColumnList = async (project_id) => {
         const url =  "https://api.github.com/projects/" + project_id + "/columns?access_token=" + access_token;
-        
         return await getValues(url, options).catch((err) => {console.log(err)});
     };
 }
