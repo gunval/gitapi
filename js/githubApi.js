@@ -15,9 +15,17 @@ function githubApi() {
         "headers" : headers
     };
 
+    const headers2 = {
+        "Accept" : "application/vnd.github.mockingbird-preview+json"
+    };
+
+    const options2 = {
+        "headers" : headers2
+    };
+
     const getValues =  (url, option) => {
         return new Promise((resolve, reject) => {
-            axios.get(url, options).then((response) => {
+            axios.get(url, option).then((response) => {
                 resolve(response.data);
             }).catch((err) => {
                 reject(err);
@@ -25,9 +33,29 @@ function githubApi() {
         });
     };
 
-    this.getIssues = async () => {
+    this.getIssueList = async () => {
         const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues?filter=all&state=all&sort=created&direction=asc";
         return await getValues(url, options).catch((err) => {console.log(err)});
+    };
+
+    this.getIssue = async (number) => {
+        const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues/" + number + "?filter=all&state=all&sort=created&direction=asc";
+        return await getValues(url, options).catch((err) => {console.log(err)});
+    };
+
+    this.getIssueComments = async (number) => {
+        const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues/" + number + "/comments?access_token=" + access_token;
+        return await getValues(url, options).catch((err) => {console.log(err)});
+    };
+
+    this.getIssueEvents = async (number) => {
+        const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues/" + number + "/events?access_token=" + access_token;
+        return await getValues(url, options).catch((err) => {console.log(err)});
+    };
+
+    this.getIssueTimeline = async (number) => {
+        const url = "https://api.github.com/repos/" + organization + "/" + repository + "/issues/" + number + "/timeline?access_token=" + access_token;
+        return await getValues(url, options2).catch((err) => {console.log(err)});
     };
 
     this.getProjects = async () => {
@@ -46,7 +74,7 @@ function githubApi() {
     };
 
     this.getCard = async (card_id) => {
-        const url =  "https://api.github.com/projects/columns/cards" + card_id + "?access_token=" + access_token;
+        const url =  "https://api.github.com/projects/columns/cards/" + card_id + "?access_token=" + access_token;
         return await getValues(url, options).catch((err) => {console.log(err)});
     };
 }
